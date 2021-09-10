@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "timely_setup.h"
+#include "timely_main.h"
 
 /*********************
  *      DEFINES
@@ -47,6 +48,10 @@ void timely_launcher_init(void)
 {
     lv_obj_t * obj;
 
+    lv_style_t text_style;
+    lv_style_init(&text_style);
+    lv_style_set_text_font(&text_style, &lv_font_montserrat_48);  /*Set a larger font*/
+
     lv_obj_t * timely_tv = lv_tileview_create(lv_scr_act());
     lv_obj_set_size(timely_tv, 240, 240);
     lv_obj_set_scrollbar_mode(timely_tv, LV_SCROLLBAR_MODE_OFF);
@@ -54,10 +59,12 @@ void timely_launcher_init(void)
     obj = lv_tileview_add_tile(timely_tv, 1, 0, LV_DIR_VER);
     obj = lv_label_create(obj);
     lv_label_set_text(obj, "Settings: 1;0");
+    lv_obj_add_style(obj, &text_style, 0);
 
     obj = lv_tileview_add_tile(timely_tv, 1, 1, LV_DIR_ALL);
-    obj = lv_label_create(obj);
-    lv_label_set_text(obj, "Main Tile: 1;1");
+    timely_main_init(obj);
+    //obj = lv_label_create(obj);
+    //lv_label_set_text(obj, "Main Tile: 1;1");
 
     obj = lv_tileview_add_tile(timely_tv, 1, 2, LV_DIR_VER);
     obj = lv_label_create(obj);
