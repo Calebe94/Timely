@@ -27,7 +27,7 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************/
 
-lv_obj_t* timely_main_init(lv_obj_t *reference);
+void timely_main_init(lv_obj_t *reference);
 
 /**********************
  *      MACROS
