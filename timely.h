@@ -33,7 +33,8 @@ extern "C" {
 */
 
 #include "src/timely_setup.h"
-
+#include "src/timely_main.h"
+#include "src/timely_lock_screen.h"
 
 /*********************
  *      DEFINES
