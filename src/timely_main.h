@@ -29,6 +29,8 @@ extern "C" {
 
 void timely_main_init(lv_obj_t *reference);
 
+void timely_main_update();
+
 /**********************
  *      MACROS
  **********************/

@@ -8,6 +8,7 @@
  *********************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "timely_main.h"
 
@@ -34,6 +35,18 @@ static void timely_main_tile_style_init()
 {
     lv_style_init(&style_hour);
     lv_style_set_text_font(&style_hour, &lv_font_montserrat_48);
+}
+
+static void timely_format_time(int value, char *string)
+{
+    if(value < 9)
+    {
+        sprintf(string, "0%d", value);
+    }
+    else
+    {
+        sprintf(string, "%d", value);
+    }
 }
 
 /**********************
@@ -80,4 +93,21 @@ void timely_main_init(lv_obj_t *reference)
     lv_obj_set_width(datetime_label, 90);
     lv_label_set_text(datetime_label, "25 nov. 2021");
     lv_obj_align(datetime_label, LV_ALIGN_CENTER, 0, 50);
+}
+
+void timely_main_update()
+{
+    char minute_string[5], hour_string[5], buffer[20];
+
+    time_t current_time;
+    struct tm * tminfo;
+    time(&current_time);
+    tminfo = localtime ( &current_time );
+    timely_format_time(tminfo->tm_hour, hour_string);
+    lv_label_set_text(hour_label, hour_string);
+    timely_format_time(tminfo->tm_min, minute_string);
+    lv_label_set_text(minute_label, minute_string);
+    strftime(buffer, 20, "%d - %m - %Y", tminfo);
+    lv_label_set_text(datetime_label, buffer);
+    printf("Current time = %s", ctime(&current_time));
 }
