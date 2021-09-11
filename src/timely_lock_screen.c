@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "timely_main.h"
+
 #include "timely_lock_screen.h"
 
 /*********************
@@ -19,6 +21,7 @@
 /**********************
  *  STATIC VARIABLES
  **********************/
+static lv_obj_t *lock_screen_button;
 static lv_obj_t *hour_label;
 static lv_obj_t *minute_label;
 static lv_obj_t *datetime_label;
@@ -49,16 +52,40 @@ static void timely_format_time(int value, char *string)
         sprintf(string, "%d", value);
     }
 }
+
+static void lock_screen_event_handler(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+
+    if(code == LV_EVENT_CLICKED) {
+        LV_LOG_USER("Clicked");
+        timely_launcher_init();
+    }
+    else if(code == LV_EVENT_VALUE_CHANGED) {
+        LV_LOG_USER("Toggled");
+    }
+}
+
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
 void timely_lock_screen_init()
 {
+    static lv_style_t style_btn;
+    lv_style_init(&style_btn);
+    lv_style_set_bg_color(&style_btn, lv_color_black());
+
     timely_lock_screen_style_init();
+    lock_screen_button = lv_btn_create(lv_scr_act());
+    lv_obj_add_event_cb(lock_screen_button, lock_screen_event_handler, LV_EVENT_ALL, NULL);
+    //lv_obj_align(lock_screen_button, LV_ALIGN_CENTER, 0, -40);
+    lv_obj_set_size(lock_screen_button, 240, 240);
+    lv_obj_add_style(lock_screen_button, &style_btn, 0);
+
     /*******
      * HOUR
      *******/
-    hour_label = lv_label_create(lv_scr_act());
+    hour_label = lv_label_create(lock_screen_button);
     lv_label_set_text(hour_label, "19");
     lv_obj_add_style(hour_label, &style_hour, 0);
 
@@ -72,7 +99,7 @@ void timely_lock_screen_init()
     /*********
      * MINUTE
      ********/
-    minute_label = lv_label_create(lv_scr_act());
+    minute_label = lv_label_create(lock_screen_button);
     lv_label_set_text(minute_label, "20");
     lv_obj_add_style(minute_label, &style_hour, 0);
 
@@ -86,7 +113,7 @@ void timely_lock_screen_init()
     /***********
      * DATETIME
      **********/
-    datetime_label = lv_label_create(lv_scr_act());
+    datetime_label = lv_label_create(lock_screen_button);
     lv_label_set_long_mode(datetime_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
     lv_obj_set_width(datetime_label, 90);
     lv_label_set_text(datetime_label, "25 nov. 2021");
@@ -95,7 +122,7 @@ void timely_lock_screen_init()
     /*******************
      * Notification LED
      ******************/
-    notification_led  = lv_led_create(lv_scr_act());
+    notification_led  = lv_led_create(lock_screen_button);
     lv_obj_align(notification_led, LV_ALIGN_CENTER, 0, 80);
     lv_obj_set_size(notification_led, 10, 10);
     lv_led_set_brightness(notification_led, 150);

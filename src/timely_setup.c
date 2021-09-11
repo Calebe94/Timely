@@ -59,7 +59,7 @@ void timely_launcher_init(void)
     obj = lv_tileview_add_tile(timely_tv, 1, 0, LV_DIR_VER);
     obj = lv_label_create(obj);
     lv_label_set_text(obj, "Settings: 1;0");
-    lv_obj_add_style(obj, &text_style, 0);
+    //lv_obj_add_style(obj, &text_style, 0);
 
     obj = lv_tileview_add_tile(timely_tv, 1, 1, LV_DIR_ALL);
     timely_main_init(obj);
