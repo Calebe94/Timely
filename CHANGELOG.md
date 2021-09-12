@@ -15,10 +15,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Added `CMakeLists.txt` file;
 * Added `timely.mk` make file;
 * Added a simple tileview with the desired ui layout;
+* Added lock screen prototype;
+* Added weather and missed notifications to main tile;
+* Added 48x48 pixels weather cloudy sun icon;
 
 ### Fixed
 
+* Fixed labels misalignment;
+
 ### Changed
+
+* Updated lock screen and added click event;
 
 ### Removed
 
