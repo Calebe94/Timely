@@ -22,9 +22,18 @@
 static lv_obj_t *hour_label;
 static lv_obj_t *minute_label;
 static lv_obj_t *datetime_label;
+static lv_obj_t *missed_notification_label;
+static lv_obj_t *weather_icon;
+static lv_obj_t *weather_label;
 static lv_style_t style_hour;
 
-/***************** *****
+
+/**********************
+ *  IMAGE DECLARATIONS
+ **********************/
+LV_IMG_DECLARE(cloudy_sun_48x48);
+
+/**********************
  *  GLOBAL VARIABLES
  **********************/
 
@@ -69,7 +78,7 @@ void timely_main_init(lv_obj_t *reference)
 
     lv_obj_set_width(hour_label, 100);  /*Set smaller width to make the lines wrap*/
     lv_obj_set_style_text_align(hour_label, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_align(hour_label, LV_ALIGN_CENTER, 0, -40);
+    lv_obj_align(hour_label, LV_ALIGN_CENTER, 0, -60);
 
     /*********
      * MINUTE
@@ -83,7 +92,7 @@ void timely_main_init(lv_obj_t *reference)
 
     lv_obj_set_width(minute_label, 100);  /*Set smaller width to make the lines wrap*/
     lv_obj_set_style_text_align(minute_label, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_align(minute_label, LV_ALIGN_CENTER, 0, 10);
+    lv_obj_align(minute_label, LV_ALIGN_CENTER, 0, -20);
 
     /***********
      * DATETIME
@@ -92,7 +101,32 @@ void timely_main_init(lv_obj_t *reference)
     lv_label_set_long_mode(datetime_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
     lv_obj_set_width(datetime_label, 90);
     lv_label_set_text(datetime_label, "25 nov. 2021");
-    lv_obj_align(datetime_label, LV_ALIGN_CENTER, 0, 50);
+    lv_obj_align(datetime_label, LV_ALIGN_CENTER, 0, 20);
+
+    /**********************
+     * MISSED NOTIFICATION
+     *********************/
+    missed_notification_label = lv_label_create(reference);
+    lv_label_set_long_mode(missed_notification_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
+    //lv_obj_set_width(missed_notification_label, 90);
+    lv_label_set_text(missed_notification_label, "Missed 3 Notifications");
+    lv_obj_align(missed_notification_label, LV_ALIGN_CENTER, 0, 40);
+
+    /**********************
+     * WEATHER ICON
+     *********************/
+    weather_icon = lv_img_create(reference);
+    lv_img_set_src(weather_icon, &cloudy_sun_48x48);
+    lv_obj_align(weather_icon, LV_ALIGN_CENTER, 0, 60);
+
+    /**********************
+     * WEATHER LABEL
+     *********************/
+    weather_label = lv_label_create(reference);
+    lv_label_set_long_mode(weather_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
+    //lv_obj_set_width(missed_notification_label, 90);
+    lv_label_set_text(weather_label, "16°C");
+    lv_obj_align(weather_label, LV_ALIGN_CENTER, 0, 80);
 }
 
 void timely_main_update()
