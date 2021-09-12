@@ -92,7 +92,7 @@ void timely_main_init(lv_obj_t *reference)
 
     lv_obj_set_width(minute_label, 100);  /*Set smaller width to make the lines wrap*/
     lv_obj_set_style_text_align(minute_label, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_align(minute_label, LV_ALIGN_CENTER, 0, -40);
+    lv_obj_align(minute_label, LV_ALIGN_CENTER, 0, -30);
 
     /***********
      * DATETIME
