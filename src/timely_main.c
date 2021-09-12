@@ -78,7 +78,7 @@ void timely_main_init(lv_obj_t *reference)
 
     lv_obj_set_width(hour_label, 100);  /*Set smaller width to make the lines wrap*/
     lv_obj_set_style_text_align(hour_label, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_align(hour_label, LV_ALIGN_CENTER, 0, -60);
+    lv_obj_align(hour_label, LV_ALIGN_CENTER, 0, -80);
 
     /*********
      * MINUTE
@@ -92,7 +92,7 @@ void timely_main_init(lv_obj_t *reference)
 
     lv_obj_set_width(minute_label, 100);  /*Set smaller width to make the lines wrap*/
     lv_obj_set_style_text_align(minute_label, LV_TEXT_ALIGN_CENTER, 0);
-    lv_obj_align(minute_label, LV_ALIGN_CENTER, 0, -20);
+    lv_obj_align(minute_label, LV_ALIGN_CENTER, 0, -40);
 
     /***********
      * DATETIME
@@ -101,7 +101,7 @@ void timely_main_init(lv_obj_t *reference)
     lv_label_set_long_mode(datetime_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
     lv_obj_set_width(datetime_label, 90);
     lv_label_set_text(datetime_label, "25 nov. 2021");
-    lv_obj_align(datetime_label, LV_ALIGN_CENTER, 0, 20);
+    lv_obj_align(datetime_label, LV_ALIGN_CENTER, 0, 5);
 
     /**********************
      * MISSED NOTIFICATION
@@ -110,7 +110,7 @@ void timely_main_init(lv_obj_t *reference)
     lv_label_set_long_mode(missed_notification_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
     //lv_obj_set_width(missed_notification_label, 90);
     lv_label_set_text(missed_notification_label, "Missed 3 Notifications");
-    lv_obj_align(missed_notification_label, LV_ALIGN_CENTER, 0, 40);
+    lv_obj_align(missed_notification_label, LV_ALIGN_CENTER, 0, 25);
 
     /**********************
      * WEATHER ICON
@@ -126,7 +126,7 @@ void timely_main_init(lv_obj_t *reference)
     lv_label_set_long_mode(weather_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
     //lv_obj_set_width(missed_notification_label, 90);
     lv_label_set_text(weather_label, "16°C");
-    lv_obj_align(weather_label, LV_ALIGN_CENTER, 0, 80);
+    lv_obj_align(weather_label, LV_ALIGN_CENTER, 0, 90);
 }
 
 void timely_main_update()
