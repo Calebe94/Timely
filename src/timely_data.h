@@ -39,6 +39,7 @@ typedef struct timely_app {
     void (*on_init)(void *);             // function that inits the app
     void (*on_change)(void*);            // function used to update info on the app
     void (*on_close)(void *);            // function to unitialize the app
+    lv_obj_t *context;
 } timely_app_t;
 /**********************
  * GLOBAL PROTOTYPES
