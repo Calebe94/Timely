@@ -6,6 +6,8 @@ A [KairOS](https://github.com/Calebe94/KairOS.git) launcher.
 
 This launcher is highly based on layout proposed by [Roy-Ermers](https://github.com/Roy-Ermers) on [My-TTGO-Watch](https://github.com/sharandac/My-TTGO-Watch) issue [#147](https://github.com/sharandac/My-TTGO-Watch/issues/147).
 
+![](./screenshots/demo.gif)
+
 <br />
 
 <img align="left" hspace=30 src="./screenshots/lock_screen.png" width="100"/>
