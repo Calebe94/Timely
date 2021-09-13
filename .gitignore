@@ -53,3 +53,4 @@ dkms.conf
 
 **/*.o
 objs
+timely_config.h
