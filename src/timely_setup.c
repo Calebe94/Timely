@@ -36,6 +36,23 @@ static void auto_del(lv_obj_t * obj, uint32_t delay)
     lv_anim_start(&a);
 }
 
+static void event_handler(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+
+    if(code == LV_EVENT_CLICKED)
+    {
+        LV_LOG_USER("Clicked");
+        timely_app_t *app = (timely_app_t*)lv_event_get_user_data(e);
+
+        app->on_init((void*)app);
+    }
+    else if(code == LV_EVENT_VALUE_CHANGED)
+    {
+        LV_LOG_USER("Toggled");
+    }
+}
+
 static void init_apps(void *argv)
 {
     static lv_style_t font_style;
@@ -50,12 +67,12 @@ static void init_apps(void *argv)
     lv_obj_t * label, *icon;
     lv_obj_t *context = (lv_obj_t*)argv;
 
-    int app_align = -90;
+    int app_align = -80;
     for(int index = 0; index < LENGTH(apps); index++)
     {
         lv_obj_t * btn1 = lv_btn_create(context);
         lv_obj_set_scrollbar_mode(context, LV_SCROLLBAR_MODE_OFF);
-        //lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, NULL);
+        lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, (void*)&apps[index]);
         lv_obj_align(btn1, LV_ALIGN_CENTER, 0, app_align );
         lv_obj_add_style(btn1, &style_btn, 0);
 
@@ -66,6 +83,7 @@ static void init_apps(void *argv)
             lv_img_set_src(icon, apps[index].icon);
             //lv_img_set_src(icon, &activity_48x48);
         }
+        apps[index].context = argv;
 
         // App title label
         label = lv_label_create(btn1);
