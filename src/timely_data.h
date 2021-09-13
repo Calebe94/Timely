@@ -15,11 +15,12 @@ extern "C" {
  *********************/
 #include <stdint.h>
 #include "../timely.h"
-#include "timely_weather_data.h"
+
 /*********************
  *      DEFINES
  *********************/
 #define MAX_BUFFER_SIZE      32
+#define LENGTH(X)               (sizeof X / sizeof X[0])
 
 /**********************
  *      TYPEDEFS
