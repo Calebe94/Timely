@@ -10,15 +10,15 @@
 #include <stdlib.h>
 #include "timely_setup.h"
 #include "timely_main.h"
+#include "../timely_config.h"
 
 /*********************
  *      DEFINES
  *********************/
-
 #define TIME_STEP   50
 
 /**********************
- *      TYPEDEFS
+ *  EXTERNAL VARIABLES
  **********************/
 
 /**********************
@@ -34,8 +34,53 @@ static void auto_del(lv_obj_t * obj, uint32_t delay)
     lv_anim_set_delay(&a, delay);
     lv_anim_set_ready_cb(&a, lv_obj_del_anim_ready_cb);
     lv_anim_start(&a);
-
 }
+
+static void init_apps(void *argv)
+{
+    static lv_style_t font_style;
+    static lv_style_t style_btn;
+
+    lv_style_init(&font_style);
+    lv_style_init(&style_btn);
+
+    lv_style_set_text_font(&font_style, &lv_font_montserrat_28);
+    lv_style_set_bg_color(&style_btn, lv_color_hex(0x2f3237));
+
+    lv_obj_t * label, *icon;
+    lv_obj_t *context = (lv_obj_t*)argv;
+
+    int app_align = -90;
+    for(int index = 0; index < LENGTH(apps); index++)
+    {
+        lv_obj_t * btn1 = lv_btn_create(context);
+        lv_obj_set_scrollbar_mode(context, LV_SCROLLBAR_MODE_OFF);
+        //lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, NULL);
+        lv_obj_align(btn1, LV_ALIGN_CENTER, 0, app_align );
+        lv_obj_add_style(btn1, &style_btn, 0);
+
+        if (apps[index].icon != NULL)
+        {
+            icon = lv_img_create(btn1);
+            lv_obj_align(icon, LV_ALIGN_LEFT_MID, 20, 0);
+            lv_img_set_src(icon, apps[index].icon);
+            //lv_img_set_src(icon, &activity_48x48);
+        }
+
+        // App title label
+        label = lv_label_create(btn1);
+        lv_label_set_text(label, apps[index].name);
+        //lv_obj_center(label);
+        lv_obj_align(label, LV_ALIGN_CENTER, 40, 5);
+        lv_obj_set_size(label, 200, 40);
+
+        lv_obj_add_style(label, &font_style, 0);
+
+        printf("%s - %s\n", apps[index].name, apps[index].description);
+        app_align += 80;
+    }
+}
+
 /**********************
  *      MACROS
  **********************/
@@ -71,8 +116,9 @@ void timely_launcher_init(void)
     lv_label_set_text(obj, "Notifications: 1;2");
 
     obj = lv_tileview_add_tile(timely_tv, 2, 1, LV_DIR_HOR);
-    obj = lv_label_create(obj);
-    lv_label_set_text(obj, "Apps: 2;1");
+    //obj = lv_label_create(obj);
+    //lv_label_set_text(obj, "Apps: 2;1");
+    init_apps((lv_obj_t*) obj);
 
     obj = lv_tileview_add_tile(timely_tv, 0, 1, LV_DIR_HOR);
     obj = lv_label_create(obj);
