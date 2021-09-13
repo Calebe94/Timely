@@ -60,6 +60,7 @@ static void lock_screen_event_handler(lv_event_t * e)
     if(code == LV_EVENT_CLICKED) {
         LV_LOG_USER("Clicked");
         timely_launcher_init();
+        timely_main_update();
     }
     else if(code == LV_EVENT_VALUE_CHANGED) {
         LV_LOG_USER("Toggled");
