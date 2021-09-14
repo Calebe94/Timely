@@ -46,6 +46,7 @@ static void event_handler(lv_event_t * e)
         timely_app_t *app = (timely_app_t*)lv_event_get_user_data(e);
 
         app->on_init((void*)app);
+        lv_obj_set_tile_id(lv_obj_get_parent(app->context), 3, 1, LV_ANIM_ON);
     }
     else if(code == LV_EVENT_VALUE_CHANGED)
     {
@@ -79,7 +80,7 @@ static void init_apps(void *argv)
         if (apps[index].icon != NULL)
         {
             icon = lv_img_create(btn1);
-            lv_obj_align(icon, LV_ALIGN_LEFT_MID, 20, 0);
+            lv_obj_align(icon, LV_ALIGN_LEFT_MID, 0, 0);
             lv_img_set_src(icon, apps[index].icon);
             //lv_img_set_src(icon, &activity_48x48);
         }
@@ -89,8 +90,8 @@ static void init_apps(void *argv)
         label = lv_label_create(btn1);
         lv_label_set_text(label, apps[index].name);
         //lv_obj_center(label);
-        lv_obj_align(label, LV_ALIGN_CENTER, 40, 5);
-        lv_obj_set_size(label, 200, 40);
+        lv_obj_align(label, LV_ALIGN_CENTER, 30, 5);
+        lv_obj_set_size(label, 150, 40);
 
         lv_obj_add_style(label, &font_style, 0);
 
@@ -115,9 +116,14 @@ void timely_launcher_init(void)
     lv_style_init(&text_style);
     lv_style_set_text_font(&text_style, &lv_font_montserrat_48);  /*Set a larger font*/
 
+    static lv_style_t style_tileview;
+    lv_style_init(&style_tileview);
+    lv_style_set_bg_color(&style_tileview, lv_color_black());
+
     lv_obj_t * timely_tv = lv_tileview_create(lv_scr_act());
     lv_obj_set_size(timely_tv, 240, 240);
     lv_obj_set_scrollbar_mode(timely_tv, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(timely_tv, &style_tileview, 0);
 
     obj = lv_tileview_add_tile(timely_tv, 1, 0, LV_DIR_VER);
     obj = lv_label_create(obj);
