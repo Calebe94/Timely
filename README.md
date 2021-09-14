@@ -6,6 +6,8 @@ A [KairOS](https://github.com/Calebe94/KairOS.git) launcher.
 
 This launcher is highly based on layout proposed by [Roy-Ermers](https://github.com/Roy-Ermers) on [My-TTGO-Watch](https://github.com/sharandac/My-TTGO-Watch) issue [#147](https://github.com/sharandac/My-TTGO-Watch/issues/147).
 
+![](./screenshots/demo.gif)
+
 <br />
 
 <img align="left" hspace=30 src="./screenshots/lock_screen.png" width="100"/>
@@ -16,6 +18,11 @@ This launcher is highly based on layout proposed by [Roy-Ermers](https://github.
 <img align="left" hspace=30 src="./screenshots/main_screen.png" width="100"/>
 <h3>Lock Screen</h3>
 <p>In this screen you can also check the date and time, check the weather and see how many unreaded notifications(if you have).</p>
+<br/>
+
+<img align="left" hspace=30 src="./screenshots/apps_screen.png" width="100"/>
+<h3>Applications Screen</h3>
+<p>In this screen you will see your applications.</p>
 <br/>
 
 ## Dependencies
