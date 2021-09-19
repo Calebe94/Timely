@@ -1,10 +1,10 @@
 /**
- * @file timely_main.h
+ * @file timely_watchface.h
  *
  */
 
-#ifndef _TIMELY_MAIN_SCREEN_H_
-#define _TIMELY_MAIN_SCREEN_H_
+#ifndef _TIMELY_WATCHFACE_SCREEN_H_
+#define _TIMELY_WATCHFACE_SCREEN_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,9 +27,9 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************/
 
-void timely_main_init(lv_obj_t *reference);
+void timely_watchface_init(lv_obj_t *reference);
 
-void timely_main_update();
+void timely_watchface_update();
 
 /**********************
  *      MACROS

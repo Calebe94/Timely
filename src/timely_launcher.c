@@ -8,8 +8,8 @@
  *********************/
 #include <stdio.h>
 #include <stdlib.h>
-#include "timely_setup.h"
-#include "timely_main.h"
+#include "timely_launcher.h"
+#include "timely_watchface.h"
 #include "../timely_config.h"
 
 /*********************
@@ -131,7 +131,7 @@ void timely_launcher_init(void)
     //lv_obj_add_style(obj, &text_style, 0);
 
     obj = lv_tileview_add_tile(timely_tv, 1, 1, LV_DIR_ALL);
-    timely_main_init(obj);
+    timely_watchface_init(obj);
     //obj = lv_label_create(obj);
     //lv_label_set_text(obj, "Main Tile: 1;1");
 

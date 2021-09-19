@@ -1,5 +1,5 @@
 /**
- * @file timely_main.c
+ * @file timely_watchface.c
  *
  */
 
@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "timely_main.h"
+#include "timely_watchface.h"
 
 /*********************
  *      DEFINES
@@ -40,7 +40,7 @@ LV_IMG_DECLARE(cloudy_sun_48x48);
 /**********************
  *  STATIC PROTOTYPES
  **********************/
-static void timely_main_tile_style_init()
+static void timely_watchface_tile_style_init()
 {
     lv_style_init(&style_hour);
     lv_style_set_text_font(&style_hour, &lv_font_montserrat_48);
@@ -62,9 +62,9 @@ static void timely_format_time(int value, char *string)
  *   GLOBAL FUNCTIONS
  **********************/
 
-void timely_main_init(lv_obj_t *reference)
+void timely_watchface_init(lv_obj_t *reference)
 {
-    timely_main_tile_style_init();
+    timely_watchface_tile_style_init();
 
     /*******
      * HOUR
@@ -129,7 +129,7 @@ void timely_main_init(lv_obj_t *reference)
     lv_obj_align(weather_label, LV_ALIGN_CENTER, 0, 90);
 }
 
-void timely_main_update()
+void timely_watchface_update()
 {
     char minute_string[5], hour_string[5], buffer[20];
 
