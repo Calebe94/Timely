@@ -27,7 +27,7 @@
 static lv_style_t style_tileview;
 static lv_obj_t *timely_tileview;
 static lv_obj_t *timely_watchface_tile;
-#if USE_APPS == 1
+#if USE_APPLICATIONS == 1
 static lv_obj_t *timely_apps_tile;
 #endif
 #if USE_NOTIFICATIONS == 1
@@ -60,6 +60,7 @@ static void event_handler(lv_event_t * e)
         timely_app_t *app = (timely_app_t*)lv_event_get_user_data(e);
 
         app->on_init((void*)app);
+
         lv_obj_set_tile_id(lv_obj_get_parent(app->context), 3, 1, LV_ANIM_ON);
     }
     else if(code == LV_EVENT_VALUE_CHANGED)
@@ -145,7 +146,8 @@ void timely_launcher_init(void)
 
     #if USE_APPLICATIONS == 1
     timely_apps_tile = lv_tileview_add_tile(timely_tileview, 2, 1, LV_DIR_HOR);
-    init_apps((lv_obj_t*) timely_apps_tile);
+    //init_apps((lv_obj_t*) timely_apps_tile);
+    timely_apps_init(timely_apps_tile);
     #endif
 
     #if USE_TRAY == 1
