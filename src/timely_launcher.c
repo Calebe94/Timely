@@ -22,18 +22,32 @@
  **********************/
 
 /**********************
+ *  STATIC VARIABLES
+ **********************/
+static lv_style_t style_tileview;
+static lv_obj_t *timely_tileview;
+static lv_obj_t *timely_watchface_tile;
+#if USE_APPS == 1
+static lv_obj_t *timely_apps_tile;
+#endif
+#if USE_NOTIFICATIONS == 1
+static lv_obj_t *timely_notifications_tile;
+#endif
+#if USE_SETTINGS == 1
+static lv_obj_t *timely_settings_tile;
+#endif
+#if USE_TRAY == 1
+static lv_obj_t *timely_tray_tile;
+#endif
+
+/**********************
  *  STATIC PROTOTYPES
  **********************/
 
-static void auto_del(lv_obj_t * obj, uint32_t delay)
+static void timely_launcher_style_init()
 {
-    lv_anim_t a;
-    lv_anim_init(&a);
-    lv_anim_set_var(&a, obj);
-    lv_anim_set_time(&a, 0);
-    lv_anim_set_delay(&a, delay);
-    lv_anim_set_ready_cb(&a, lv_obj_del_anim_ready_cb);
-    lv_anim_start(&a);
+    lv_style_init(&style_tileview);
+    lv_style_set_bg_color(&style_tileview, lv_color_black());
 }
 
 static void event_handler(lv_event_t * e)
@@ -110,43 +124,59 @@ static void init_apps(void *argv)
 
 void timely_launcher_init(void)
 {
-    lv_obj_t * obj;
+    timely_launcher_style_init();
 
-    lv_style_t text_style;
-    lv_style_init(&text_style);
-    lv_style_set_text_font(&text_style, &lv_font_montserrat_48);  /*Set a larger font*/
+    timely_tileview = lv_tileview_create(lv_scr_act());
+    lv_obj_set_size(timely_tileview, 240, 240);
+    lv_obj_set_scrollbar_mode(timely_tileview, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_add_style(timely_tileview, &style_tileview, 0);
 
-    static lv_style_t style_tileview;
-    lv_style_init(&style_tileview);
-    lv_style_set_bg_color(&style_tileview, lv_color_black());
+    timely_watchface_tile = lv_tileview_add_tile(timely_tileview, 1, 1, LV_DIR_ALL);
+    lv_obj_set_tile(timely_tileview, timely_watchface_tile, LV_ANIM_OFF);
+    timely_watchface_init(timely_watchface_tile);
 
-    lv_obj_t * timely_tv = lv_tileview_create(lv_scr_act());
-    lv_obj_set_size(timely_tv, 240, 240);
-    lv_obj_set_scrollbar_mode(timely_tv, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_add_style(timely_tv, &style_tileview, 0);
+    #if USE_SETTINGS == 1
+    timely_settings_tile = lv_tileview_add_tile(timely_tileview, 1, 0, LV_DIR_VER);
+    #endif
 
-    obj = lv_tileview_add_tile(timely_tv, 1, 0, LV_DIR_VER);
-    obj = lv_label_create(obj);
-    lv_label_set_text(obj, "Settings: 1;0");
-    //lv_obj_add_style(obj, &text_style, 0);
+    #if USE_NOTIFICATIONS == 1
+    timely_notifications_tile = lv_tileview_add_tile(timely_tileview, 1, 2, LV_DIR_VER);
+    #endif
 
-    obj = lv_tileview_add_tile(timely_tv, 1, 1, LV_DIR_ALL);
-    timely_watchface_init(obj);
-    //obj = lv_label_create(obj);
-    //lv_label_set_text(obj, "Main Tile: 1;1");
+    #if USE_APPLICATIONS == 1
+    timely_apps_tile = lv_tileview_add_tile(timely_tileview, 2, 1, LV_DIR_HOR);
+    init_apps((lv_obj_t*) timely_apps_tile);
+    #endif
 
-    obj = lv_tileview_add_tile(timely_tv, 1, 2, LV_DIR_VER);
-    obj = lv_label_create(obj);
-    lv_label_set_text(obj, "Notifications: 1;2");
+    #if USE_TRAY == 1
+    timely_tray_tile = lv_tileview_add_tile(timely_tileview, 0, 1, LV_DIR_HOR);
+    #endif
 
-    obj = lv_tileview_add_tile(timely_tv, 2, 1, LV_DIR_HOR);
-    //obj = lv_label_create(obj);
-    //lv_label_set_text(obj, "Apps: 2;1");
-    init_apps((lv_obj_t*) obj);
+    lv_obj_set_tile_id(timely_tileview, 1, 1, LV_ANIM_OFF);
+}
 
-    obj = lv_tileview_add_tile(timely_tv, 0, 1, LV_DIR_HOR);
-    obj = lv_label_create(obj);
-    lv_label_set_text(obj, "Favorites: 1;2");
 
-    lv_obj_set_tile_id(timely_tv, 1, 1, LV_ANIM_OFF);
+void timely_launcher_go_to_watchface(void)
+{
+    lv_obj_set_tile_id(timely_tileview, 1, 1, LV_ANIM_OFF);
+}
+
+void timely_launcher_go_to_apps(void)
+{
+    lv_obj_set_tile_id(timely_tileview, 2, 1, LV_ANIM_OFF);
+}
+
+void timely_launcher_go_to_notifications(void)
+{
+    lv_obj_set_tile_id(timely_tileview, 1, 2, LV_ANIM_OFF);
+}
+
+void timely_launcher_go_to_settings(void)
+{
+    lv_obj_set_tile_id(timely_tileview, 1, 0, LV_ANIM_OFF);
+}
+
+void timely_launcher_go_to_tray(void)
+{
+    lv_obj_set_tile_id(timely_tileview, 0, 1, LV_ANIM_OFF);
 }
