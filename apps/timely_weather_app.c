@@ -74,23 +74,19 @@ void timely_weather_init(void *context)
 
     LV_LOG_USER("Clicked");
     LV_LOG_USER( ((timely_app_t *) context)->name );
-    lv_obj_t *parent = lv_obj_get_parent(context_obj);
-    lv_obj_t * timely_tv = lv_obj_get_parent(context_obj);
-    lv_obj_t * weather_app_tile = lv_tileview_add_tile(timely_tv, 3, 1, LV_DIR_HOR);
-    lv_obj_add_event_cb(timely_tv, weather_event_handler, LV_EVENT_VALUE_CHANGED, NULL);
 
     /**********************
      * WEATHER ICON
      *********************/
 
-    weather_icon = lv_img_create(weather_app_tile);
+    weather_icon = lv_img_create(context);
     lv_img_set_src(weather_icon, &cloudy_sun_48x48);
     lv_obj_align(weather_icon, LV_ALIGN_CENTER, 0, 60);
 
     /**********************
      * WEATHER LABEL
      *********************/
-    weather_label = lv_label_create(weather_app_tile);
+    weather_label = lv_label_create(context);
     lv_label_set_long_mode(weather_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
     //lv_obj_set_width(missed_notification_label, 90);
     lv_label_set_text(weather_label, "16°C");
