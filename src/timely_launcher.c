@@ -29,6 +29,7 @@ static lv_obj_t *timely_tileview;
 static lv_obj_t *timely_watchface_tile;
 #if USE_APPLICATIONS == 1
 static lv_obj_t *timely_apps_tile;
+static lv_obj_t *timely_app_tile;
 #endif
 #if USE_NOTIFICATIONS == 1
 static lv_obj_t *timely_notifications_tile;
@@ -69,52 +70,6 @@ static void event_handler(lv_event_t * e)
     }
 }
 
-static void init_apps(void *argv)
-{
-    static lv_style_t font_style;
-    static lv_style_t style_btn;
-
-    lv_style_init(&font_style);
-    lv_style_init(&style_btn);
-
-    lv_style_set_text_font(&font_style, &lv_font_montserrat_28);
-    lv_style_set_bg_color(&style_btn, lv_color_hex(0x2f3237));
-
-    lv_obj_t * label, *icon;
-    lv_obj_t *context = (lv_obj_t*)argv;
-
-    int app_align = -80;
-    for(int index = 0; index < LENGTH(apps); index++)
-    {
-        lv_obj_t * btn1 = lv_btn_create(context);
-        lv_obj_set_scrollbar_mode(context, LV_SCROLLBAR_MODE_OFF);
-        lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, (void*)&apps[index]);
-        lv_obj_align(btn1, LV_ALIGN_CENTER, 0, app_align );
-        lv_obj_add_style(btn1, &style_btn, 0);
-
-        if (apps[index].icon != NULL)
-        {
-            icon = lv_img_create(btn1);
-            lv_obj_align(icon, LV_ALIGN_LEFT_MID, 0, 0);
-            lv_img_set_src(icon, apps[index].icon);
-            //lv_img_set_src(icon, &activity_48x48);
-        }
-        apps[index].context = argv;
-
-        // App title label
-        label = lv_label_create(btn1);
-        lv_label_set_text(label, apps[index].name);
-        //lv_obj_center(label);
-        lv_obj_align(label, LV_ALIGN_CENTER, 30, 5);
-        lv_obj_set_size(label, 150, 40);
-
-        lv_obj_add_style(label, &font_style, 0);
-
-        printf("%s - %s\n", apps[index].name, apps[index].description);
-        app_align += 80;
-    }
-}
-
 /**********************
  *      MACROS
  **********************/
@@ -146,6 +101,8 @@ void timely_launcher_init(void)
 
     #if USE_APPLICATIONS == 1
     timely_apps_tile = lv_tileview_add_tile(timely_tileview, 2, 1, LV_DIR_HOR);
+    timely_app_tile = lv_tileview_add_tile(timely_tileview, 3, 1, LV_DIR_HOR);
+    lv_obj_add_flag(timely_app_tile, LV_OBJ_FLAG_HIDDEN);
     //init_apps((lv_obj_t*) timely_apps_tile);
     timely_apps_init(timely_apps_tile);
     #endif

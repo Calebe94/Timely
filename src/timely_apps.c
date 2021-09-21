@@ -30,6 +30,7 @@ static lv_style_t style_btn;
 
 #if USE_APPLICATIONS == 1
 static lv_obj_t *timely_apps_tile;
+static lv_obj_t *timely_app_tile;
 #endif
 
 /**********************
@@ -48,22 +49,19 @@ static void timely_apps_style_init()
 static void event_handler(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
-
     if(code == LV_EVENT_CLICKED)
     {
         LV_LOG_USER("Clicked");
         timely_app_t *app = (timely_app_t*)lv_event_get_user_data(e);
-        lv_obj_t * timely_tv = lv_obj_get_parent(timely_apps_tile);
-        lv_obj_t * weather_app_tile = lv_tileview_add_tile(timely_tv, 3, 1, LV_DIR_HOR);
-        app->context = weather_app_tile;
+        app->context = timely_app_tile;
         //lv_obj_add_event_cb(timely_tv, weather_event_handler, LV_EVENT_VALUE_CHANGED, NULL);
         if(app->on_init != NULL)
         {
             app->on_init((void*)app);
-            sleep(1);
-            lv_obj_set_tile_id(lv_obj_get_parent(timely_apps_tile), 3, 1, LV_ANIM_OFF);
+            lv_obj_clear_flag(timely_app_tile, LV_OBJ_FLAG_HIDDEN);
+            //lv_obj_set_tile(timely_tv, weather_app_tile, LV_ANIM_ON);
+            lv_obj_set_tile_id(lv_obj_get_parent(timely_apps_tile), 3, 1, LV_ANIM_ON);
         }
-
     }
     else if(code == LV_EVENT_VALUE_CHANGED)
     {
@@ -71,6 +69,15 @@ static void event_handler(lv_event_t * e)
     }
 }
 
+static void timely_app_event_handler(lv_event_t *event)
+{
+    lv_event_code_t code = lv_event_get_code(event);
+    LV_LOG_USER("Toggled");
+    if(code == LV_EVENT_VALUE_CHANGED)
+    {
+        LV_LOG_USER("Toggled");
+    }
+}
 
 /**********************
  *      MACROS
@@ -84,6 +91,10 @@ void timely_apps_init(lv_obj_t *context)
 {
     timely_apps_style_init();
     timely_apps_tile = context;
+    lv_obj_t * timely_tv = lv_obj_get_parent(timely_apps_tile);
+    timely_app_tile = lv_tileview_add_tile(timely_tv, 3, 1, LV_DIR_HOR);
+    lv_obj_add_event_cb(timely_app_tile, timely_app_event_handler, LV_EVENT_ALL, NULL);
+    lv_obj_add_flag(timely_app_tile, LV_OBJ_FLAG_HIDDEN);
     #if USE_APPLICATIONS == 1
     #endif
     lv_obj_t * label, *icon;
@@ -104,7 +115,7 @@ void timely_apps_init(lv_obj_t *context)
             lv_img_set_src(icon, apps[index].icon);
             //lv_img_set_src(icon, &activity_48x48);
         }
-        //apps[index].context = context;
+        apps[index].context = timely_app_tile;
 
         // App title label
         label = lv_label_create(btn1);
