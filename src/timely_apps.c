@@ -31,6 +31,7 @@ static lv_style_t style_btn;
 #if USE_APPLICATIONS == 1
 static lv_obj_t *timely_apps_tile;
 static lv_obj_t *timely_app_tile;
+static timely_app_t *current_app;
 #endif
 
 /**********************
@@ -49,11 +50,13 @@ static void timely_apps_style_init()
 static void event_handler(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
+
     if(code == LV_EVENT_CLICKED)
     {
         LV_LOG_USER("Clicked");
         timely_app_t *app = (timely_app_t*)lv_event_get_user_data(e);
         app->context = timely_app_tile;
+        current_app = app;
         //lv_obj_add_event_cb(timely_tv, weather_event_handler, LV_EVENT_VALUE_CHANGED, NULL);
         if(app->on_init != NULL)
         {
@@ -72,10 +75,18 @@ static void event_handler(lv_event_t * e)
 static void timely_app_event_handler(lv_event_t *event)
 {
     lv_event_code_t code = lv_event_get_code(event);
-    LV_LOG_USER("Toggled");
-    if(code == LV_EVENT_VALUE_CHANGED)
+
+    if (code == LV_EVENT_DEFOCUSED)
     {
-        LV_LOG_USER("Toggled");
+        if (current_app != NULL && current_app->on_close != NULL)
+        {
+            current_app->on_close((void*)current_app);
+            current_app = NULL;
+        }
+        LV_LOG_USER("Saiu da tela do aplicativo");
+
+        lv_obj_clean(timely_app_tile);
+        lv_obj_add_flag(timely_app_tile, LV_OBJ_FLAG_HIDDEN);
     }
 }
 
@@ -93,7 +104,7 @@ void timely_apps_init(lv_obj_t *context)
     timely_apps_tile = context;
     lv_obj_t * timely_tv = lv_obj_get_parent(timely_apps_tile);
     timely_app_tile = lv_tileview_add_tile(timely_tv, 3, 1, LV_DIR_HOR);
-    lv_obj_add_event_cb(timely_app_tile, timely_app_event_handler, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(timely_app_tile, timely_app_event_handler, LV_EVENT_DEFOCUSED, NULL);
     lv_obj_add_flag(timely_app_tile, LV_OBJ_FLAG_HIDDEN);
     #if USE_APPLICATIONS == 1
     #endif
