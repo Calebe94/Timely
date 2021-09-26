@@ -19,10 +19,12 @@
 /**********************
  *  STATIC VARIABLES
  **********************/
+static lv_obj_t *weather_name_label;
+static lv_obj_t *weather_description_label;
 static lv_obj_t *weather_icon;
 static lv_obj_t *weather_label;
-static lv_style_t style_hour;
-
+static lv_style_t style_name;
+static lv_style_t style_description;
 
 /**********************
  *  IMAGE DECLARATIONS
@@ -36,33 +38,15 @@ LV_IMG_DECLARE(cloudy_sun_48x48);
 /**********************
  *  STATIC PROTOTYPES
  **********************/
-static void timely_weather_app_style_init()
+static void timely_weather_style_init()
 {
-    lv_style_init(&style_hour);
-    lv_style_set_text_font(&style_hour, &lv_font_montserrat_48);
-}
+    lv_style_init(&style_name);
+    lv_style_set_text_font(&style_name, &lv_font_montserrat_28);
+    lv_style_set_text_color(&style_name, lv_color_white());
 
-static void timely_format_time(int value, char *string)
-{
-    if(value < 9)
-    {
-        sprintf(string, "0%d", value);
-    }
-    else
-    {
-        sprintf(string, "%d", value);
-    }
-}
-
-static void weather_event_handler(lv_event_t * e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-
-    if(code == LV_EVENT_VALUE_CHANGED)
-    {
-        LV_LOG_USER("Toggled");
-
-    }
+    lv_style_init(&style_description);
+    lv_style_set_text_font(&style_description, &lv_font_montserrat_14);
+    lv_style_set_text_color(&style_description, lv_color_white());
 }
 /**********************
  *   GLOBAL FUNCTIONS
@@ -70,27 +54,40 @@ static void weather_event_handler(lv_event_t * e)
 
 void timely_weather_init(void *context)
 {
+    timely_weather_style_init();
     lv_obj_t * context_obj = ((timely_app_t *) context)->context;
 
-    LV_LOG_USER("Clicked");
     LV_LOG_USER( ((timely_app_t *) context)->name );
-    lv_obj_t *parent = lv_obj_get_parent(context_obj);
-    lv_obj_t * timely_tv = lv_obj_get_parent(context_obj);
-    lv_obj_t * weather_app_tile = lv_tileview_add_tile(timely_tv, 3, 1, LV_DIR_HOR);
-    lv_obj_add_event_cb(timely_tv, weather_event_handler, LV_EVENT_VALUE_CHANGED, NULL);
+
+    /**********************
+     * WEATHER APP NAME
+     *********************/
+    weather_name_label = lv_label_create(context_obj);
+    lv_label_set_long_mode(weather_name_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
+    lv_label_set_text(weather_name_label, ((timely_app_t *) context)->name);
+    lv_obj_add_style(weather_name_label, &style_name, 0);
+    lv_obj_align(weather_name_label, LV_ALIGN_CENTER, 0, -80);
+
+    /**********************
+     * WEATHER APP Description
+     *********************/
+    weather_description_label = lv_label_create(context_obj);
+    lv_label_set_long_mode(weather_description_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
+    lv_label_set_text(weather_description_label, ((timely_app_t *) context)->description);
+    lv_obj_add_style(weather_description_label, &style_description, 0);
+    lv_obj_align(weather_description_label, LV_ALIGN_CENTER, 0, 0);
 
     /**********************
      * WEATHER ICON
      *********************/
-
-    weather_icon = lv_img_create(weather_app_tile);
+    weather_icon = lv_img_create(context_obj);
     lv_img_set_src(weather_icon, &cloudy_sun_48x48);
     lv_obj_align(weather_icon, LV_ALIGN_CENTER, 0, 60);
 
     /**********************
      * WEATHER LABEL
      *********************/
-    weather_label = lv_label_create(weather_app_tile);
+    weather_label = lv_label_create(context_obj);
     lv_label_set_long_mode(weather_label, LV_LABEL_LONG_WRAP);     /*Circular scroll*/
     //lv_obj_set_width(missed_notification_label, 90);
     lv_label_set_text(weather_label, "16°C");

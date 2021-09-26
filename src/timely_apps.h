@@ -1,10 +1,10 @@
 /**
- * @file timely.h
+ * @file timely_apps.h
  *
  */
 
-#ifndef _TIMELY_H_
-#define _TIMELY_H_
+#ifndef _TIMELY_APPS_H_
+#define _TIMELY_APPS_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,7 +27,7 @@ extern "C" {
  * GLOBAL PROTOTYPES
  **********************/
 
-void timely_launcher_init(void);
+void timely_apps_init(lv_obj_t *);
 
 /**********************
  *      MACROS
