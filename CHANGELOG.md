@@ -9,11 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+* Added comments to config file;
+* Added `timely_app_t *current_app` pointer to store the opened app;
+* Added methods to change context;
+* Added style to watchface fonts;
+* Added functions to manage the applications;
+
 ### Fixed
+
+* Fixed typo in weather app;
 
 ### Changed
 
+* Changed weather stock application by adding name and description labels;
+* Renamed `timely_main` to `timely_watchface`;
+* Renamed `timely_setup` to `timely_launcher`;
+
 ### Removed
+
+* Removed unused event handler function;
 
 ## [0.1.0]
 
