@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Fixed
+
+### Changed
+
+### Removed
+
+## [0.2.0]
+
+### Added
+
 * Added comments to config file;
 * Added `timely_app_t *current_app` pointer to store the opened app;
 * Added methods to change context;
@@ -62,5 +72,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-[unreleased]: https://github.com/Calebe94/Timely/compare/0.1.0...HEAD
+[unreleased]: https://github.com/Calebe94/Timely/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/Calebe94/Timely/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/Calebe94/Timely/releases/tag/0.1.0
