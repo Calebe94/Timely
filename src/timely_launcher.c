@@ -51,25 +51,6 @@ static void timely_launcher_style_init()
     lv_style_set_bg_color(&style_tileview, lv_color_black());
 }
 
-static void event_handler(lv_event_t * e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-
-    if(code == LV_EVENT_CLICKED)
-    {
-        LV_LOG_USER("Clicked");
-        timely_app_t *app = (timely_app_t*)lv_event_get_user_data(e);
-
-        app->on_init((void*)app);
-
-        lv_obj_set_tile_id(lv_obj_get_parent(app->context), 3, 1, LV_ANIM_ON);
-    }
-    else if(code == LV_EVENT_VALUE_CHANGED)
-    {
-        LV_LOG_USER("Toggled");
-    }
-}
-
 /**********************
  *      MACROS
  **********************/
