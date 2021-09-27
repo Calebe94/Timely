@@ -74,6 +74,7 @@ void timely_launcher_init(void)
 
     #if USE_SETTINGS == 1
     timely_settings_tile = lv_tileview_add_tile(timely_tileview, 1, 0, LV_DIR_VER);
+    timely_settings_init(timely_settings_tile);
     #endif
 
     #if USE_NOTIFICATIONS == 1

@@ -37,6 +37,7 @@ extern "C" {
 #include "src/timely_lock_screen.h"
 #include "src/timely_data.h"
 #include "src/timely_apps.h"
+#include "src/timely_settings.h"
 
 /*********************
  *      DEFINES
