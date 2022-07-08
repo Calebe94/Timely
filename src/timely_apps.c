@@ -45,7 +45,7 @@ static void timely_apps_style_init()
     lv_style_init(&font_style);
     lv_style_init(&style_btn);
 
-    lv_style_set_text_font(&font_style, &lv_font_montserrat_28);
+    lv_style_set_text_font(&font_style, &lv_font_montserrat_22);
     lv_style_set_bg_color(&style_btn, lv_color_hex(0x2f3237));
 }
 
@@ -112,7 +112,7 @@ void timely_apps_init(lv_obj_t *context)
     #endif
     lv_obj_t * label, *icon;
 
-    int app_align = -80;
+    int app_align = -(TIMELY_HEIGHT/3);
     if (timely_apps == NULL)
     {
         printf("timely_apps is NULL\n");
@@ -126,6 +126,7 @@ void timely_apps_init(lv_obj_t *context)
             lv_obj_set_scrollbar_mode(context, LV_SCROLLBAR_MODE_OFF);
             lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, (void*)&timely_apps[index]);
             lv_obj_align(btn1, LV_ALIGN_CENTER, 0, app_align );
+            lv_obj_set_size(btn1, TIMELY_WIDTH-(TIMELY_WIDTH/10), TIMELY_HEIGHT/4);
             lv_obj_add_style(btn1, &style_btn, 0);
 
             if (timely_apps[index].icon != NULL)
@@ -141,13 +142,14 @@ void timely_apps_init(lv_obj_t *context)
             label = lv_label_create(btn1);
             lv_label_set_text(label, timely_apps[index].name);
             //lv_obj_center(label);
-            lv_obj_align(label, LV_ALIGN_CENTER, 30, 5);
-            lv_obj_set_size(label, 150, 40);
+            /* lv_obj_align(label, LV_ALIGN_CENTER, 0, 0); */
+            lv_obj_align(label, LV_ALIGN_RIGHT_MID, 0, 0);
+            /* lv_obj_set_size(label, TIMELY_WIDTH - (TIMELY_WIDTH/4), 40); */
 
             lv_obj_add_style(label, &font_style, 0);
 
             printf("%s - %s\n", timely_apps[index].name, timely_apps[index].description);
-            app_align += 80;
+            app_align += (TIMELY_HEIGHT/4)+(TIMELY_HEIGHT/20);
         }
     }
 }
