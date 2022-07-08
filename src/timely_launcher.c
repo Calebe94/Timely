@@ -64,7 +64,7 @@ void timely_launcher_init(void)
     timely_launcher_style_init();
 
     timely_tileview = lv_tileview_create(lv_scr_act());
-    lv_obj_set_size(timely_tileview, 240, 240);
+    lv_obj_set_size(timely_tileview, TIMELY_WIDTH, TIMELY_HEIGHT);
     lv_obj_set_scrollbar_mode(timely_tileview, LV_SCROLLBAR_MODE_OFF);
     lv_obj_add_style(timely_tileview, &style_tileview, 0);
 

@@ -29,6 +29,7 @@ extern "C" {
 
 void timely_apps_init(lv_obj_t *);
 
+void timely_register_apps(timely_app_t *);
 /**********************
  *      MACROS
  **********************/

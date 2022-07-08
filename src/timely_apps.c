@@ -7,11 +7,13 @@
  *      INCLUDES
  *********************/
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include "timely_apps.h"
+#include "timely_data.h"
 #include "timely_watchface.h"
-/* #include "../timely_config.h" */
+#include "timely_config.h"
 
 /*********************
  *      DEFINES
@@ -21,7 +23,6 @@
 /**********************
  *  EXTERNAL VARIABLES
  **********************/
-extern timely_app_t *apps;
 
 /**********************
  *  STATIC VARIABLES
@@ -112,33 +113,57 @@ void timely_apps_init(lv_obj_t *context)
     lv_obj_t * label, *icon;
 
     int app_align = -80;
-    for(int index = 0; index < LENGTH(apps); index++)
+    if (timely_apps == NULL)
     {
-        lv_obj_t * btn1 = lv_btn_create(context);
-        lv_obj_set_scrollbar_mode(context, LV_SCROLLBAR_MODE_OFF);
-        lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, (void*)&apps[index]);
-        lv_obj_align(btn1, LV_ALIGN_CENTER, 0, app_align );
-        lv_obj_add_style(btn1, &style_btn, 0);
-
-        if (apps[index].icon != NULL)
-        {
-            icon = lv_img_create(btn1);
-            lv_obj_align(icon, LV_ALIGN_LEFT_MID, 0, 0);
-            lv_img_set_src(icon, apps[index].icon);
-            //lv_img_set_src(icon, &activity_48x48);
-        }
-        apps[index].context = timely_app_tile;
-
-        // App title label
-        label = lv_label_create(btn1);
-        lv_label_set_text(label, apps[index].name);
-        //lv_obj_center(label);
-        lv_obj_align(label, LV_ALIGN_CENTER, 30, 5);
-        lv_obj_set_size(label, 150, 40);
-
-        lv_obj_add_style(label, &font_style, 0);
-
-        printf("%s - %s\n", apps[index].name, apps[index].description);
-        app_align += 80;
+        printf("timely_apps is NULL\n");
     }
+    else
+    {
+        printf("timely_apps is not NULL: %d\n", LENGTH(timely_apps));
+        for(int index = 0; index < LENGTH(timely_apps); index++)
+        {
+            lv_obj_t * btn1 = lv_btn_create(context);
+            lv_obj_set_scrollbar_mode(context, LV_SCROLLBAR_MODE_OFF);
+            lv_obj_add_event_cb(btn1, event_handler, LV_EVENT_ALL, (void*)&timely_apps[index]);
+            lv_obj_align(btn1, LV_ALIGN_CENTER, 0, app_align );
+            lv_obj_add_style(btn1, &style_btn, 0);
+
+            if (timely_apps[index].icon != NULL)
+            {
+                icon = lv_img_create(btn1);
+                lv_obj_align(icon, LV_ALIGN_LEFT_MID, 0, 0);
+                lv_img_set_src(icon, timely_apps[index].icon);
+                //lv_img_set_src(icon, &activity_48x48);
+            }
+            timely_apps[index].context = timely_app_tile;
+
+            // App title label
+            label = lv_label_create(btn1);
+            lv_label_set_text(label, timely_apps[index].name);
+            //lv_obj_center(label);
+            lv_obj_align(label, LV_ALIGN_CENTER, 30, 5);
+            lv_obj_set_size(label, 150, 40);
+
+            lv_obj_add_style(label, &font_style, 0);
+
+            printf("%s - %s\n", timely_apps[index].name, timely_apps[index].description);
+            app_align += 80;
+        }
+    }
+}
+
+void timely_register_apps(timely_app_t *apps)
+{
+    if(apps == NULL)
+    {
+        printf("apps is null\n");
+    }
+    else
+    {
+        printf("apps is not null: %d\n", LENGTH(apps));
+        /* timely_apps = (timely_app_t*)malloc(sizeof(timely_app_t)*LENGTH(apps)); */
+        /* timely_apps = apps; */
+        printf("timely_apps: %d\n", LENGTH(timely_apps));
+    }
+    /* memcpy((void*)apps, (void*)timely_apps, sizeof(apps)); */
 }
