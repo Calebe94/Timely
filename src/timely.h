@@ -32,11 +32,11 @@ extern "C" {
 #endif
 */
 
-#include "src/timely_launcher.h"
-#include "src/timely_watchface.h"
-#include "src/timely_lock_screen.h"
-#include "src/timely_data.h"
-#include "src/timely_apps.h"
+#include "timely_launcher.h"
+#include "timely_watchface.h"
+#include "timely_lock_screen.h"
+#include "timely_data.h"
+#include "timely_apps.h"
 
 /*********************
  *      DEFINES

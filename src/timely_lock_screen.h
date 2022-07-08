@@ -13,7 +13,7 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "../timely.h"
+#include "timely.h"
 
 /*********************
  *      DEFINES

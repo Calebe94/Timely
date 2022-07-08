@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include "timely_apps.h"
 #include "timely_watchface.h"
-#include "../timely_config.h"
+/* #include "../timely_config.h" */
 
 /*********************
  *      DEFINES
@@ -21,6 +21,7 @@
 /**********************
  *  EXTERNAL VARIABLES
  **********************/
+extern timely_app_t *apps;
 
 /**********************
  *  STATIC VARIABLES
@@ -28,11 +29,11 @@
 static lv_style_t font_style;
 static lv_style_t style_btn;
 
-#if USE_APPLICATIONS == 1
+/* #if USE_APPLICATIONS == 1 */
 static lv_obj_t *timely_apps_tile;
 static lv_obj_t *timely_app_tile;
 static timely_app_t *current_app;
-#endif
+/* #endif */
 
 /**********************
  *  STATIC PROTOTYPES

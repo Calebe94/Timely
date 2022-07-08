@@ -14,7 +14,7 @@ extern "C" {
  *      INCLUDES
  *********************/
 #include <stdint.h>
-#include "../timely.h"
+#include "timely.h"
 
 /*********************
  *      DEFINES

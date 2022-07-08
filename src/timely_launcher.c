@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include "timely_launcher.h"
 #include "timely_watchface.h"
-#include "../timely_config.h"
+/* #include "timely_config.h" */
 
 /*********************
  *      DEFINES

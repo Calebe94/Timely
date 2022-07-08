@@ -14,7 +14,7 @@ extern "C" {
  *      INCLUDES
  *********************/
 #include <time.h>
-#include "../timely.h"
+#include "timely.h"
 #include "timely_data.h"
 
 /*********************
